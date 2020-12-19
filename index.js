@@ -6,9 +6,8 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req,res) =>{
-    res.send({naz: "wright"});
-}
-);
+    res.send({naz: "wriight"});
+});
 // should not be changed lightly
 // dynamic port binding
 const PORT = process.env.PORT || 5000;
