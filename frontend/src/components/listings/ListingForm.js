@@ -1,7 +1,7 @@
 import { Field, Form } from "react-final-form";
 import * as actions from "../../actions";
 import { FIELDS } from "../data/ListingFormData";
-import Form1a from "react-bootstrap/form";
+import Form1a from "react-bootstrap/Form";
 import { Container, Button } from "react-bootstrap";
 import { connect } from "react-redux";
 import React, { Component } from "react";
