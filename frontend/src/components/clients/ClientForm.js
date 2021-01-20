@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Form1a from "react-bootstrap/form";
+import Form1a from "react-bootstrap/Form";
 import { Field, Form } from "react-final-form";
 import axios from "axios";
 import { Container, Button } from "react-bootstrap";
