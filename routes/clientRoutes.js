@@ -5,8 +5,6 @@ const ClientMeta = mongoose.model("client-meta");
 const requireLogin = require("../middlewares/requireLogin");
 
 module.exports = (app) => {
-  app.use(requireLogin);
-
   app.post("/api/clients", authorize("Employer", "Admin"), (req, res) => {
     const {
       name,
