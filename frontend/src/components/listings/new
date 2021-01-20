@@ -1,0 +1,44 @@
+<h1>Add new listing</h1>
+        <hr></hr>
+        <Form onSubmit={(values) => actions.createListing(values)}>
+          {({ handleSubmit, dirty, pristine, values, submitting }) => (
+            <Container>
+              <Form1a as="form" onSubmit={handleSubmit}>
+                <div>
+                  {FIELDS.map((field, index) => {
+                    return (
+                      <Field
+                        key={index}
+                        name={field.name}
+                        placeholder={field.label}
+                        validate={
+                          field.type === "select" ? undefined : this.required
+                        }
+                      >
+                        {({ input, meta, placeholder }) => (
+                          <div className={meta.active ? "active" : ""}>
+                            <Form1a.Label>{field.label}</Form1a.Label>
+
+                            <Form1a.Control
+                              as={field.type}
+                              {...input}
+                              placeholder={placeholder}
+                            ></Form1a.Control>
+                            {meta.error && meta.touched && (
+                              <div className="red-text">{meta.error}</div>
+                            )}
+                            <div></div>
+                          </div>
+                        )}
+                      </Field>
+                    );
+                  })}
+                  <Button as="button" type="submit" disabled={submitting}>
+                    Submit
+                  </Button>
+                  <pre>{JSON.stringify(values, undefined, 2)}</pre>
+                </div>
+              </Form1a>
+            </Container>
+          )}
+        </Form>

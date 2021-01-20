@@ -1,0 +1,76 @@
+export const FIELDS = [
+  {
+    label: "Listing Title",
+    name: "title",
+    type: "input",
+    noValueError: "Please provide the listing title",
+  },
+  {
+    label: "Description",
+    name: "description",
+    type: "textarea",
+    noValueError: "Please add a description for this job",
+  },
+  {
+    label: "Compensation",
+    name: "compensation",
+    type: "input",
+    noValueError: "You must specify the compensation for this job",
+  },
+  {
+    label: "Benefits Offered",
+    name: "benefits",
+    type: "input",
+    noValueError: "You must specify benefits",
+  },
+  {
+    label: "Job Type",
+    name: "jobType",
+    type: "input",
+    noValueError: "You must select a Job type",
+  },
+  {
+    label: "Category",
+    name: "category",
+    type: "select",
+    noValueError: "You must select a category",
+  },
+  {
+    label: "Company Name",
+    name: "companyName",
+    type: "input",
+    noValueError: "You must enter a name",
+  },
+  {
+    label: "Website",
+    name: "website",
+    type: "input",
+    noValueError: "You must enter a name",
+  },
+  {
+    label: "City",
+    name: "city",
+    type: "select",
+    noValueError: "You must enter a name",
+  },
+  {
+    label: "State",
+    name: "state",
+    type: "select",
+    noValueError: "You must enter a name",
+    defaultVal: "NC",
+  },
+  {
+    label: "Zip Code",
+    name: "zip",
+    type: "input",
+    noValueError: "You must enter a name",
+  },
+  {
+    label: "Country",
+    name: "country",
+    type: "select",
+    noValueError: "You must enter a name",
+    defaultVal: "United States of America",
+  },
+];

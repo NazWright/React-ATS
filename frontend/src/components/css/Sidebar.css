@@ -1,0 +1,111 @@
+.navbar {
+  background-color: white;
+  height: 80px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  top: 0px;
+  z-index: 2;
+  width: 100%;
+  border: 2px solid;
+}
+.menu-bars {
+  margin-left: 2rem;
+  font-size: 2rem;
+  background: none;
+  position: absolute;
+  left: 0;
+  z-index: 7;
+  color: blue;
+}
+.nav-menu {
+  background-color: #060b26;
+  width: 250px;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  transition: 850ms;
+  z-index: 5;
+}
+.nav-menu.active {
+  left: 0;
+  transition: 350ms;
+}
+.nav-text {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  list-style: none;
+  height: 60px;
+}
+.nav-text a {
+  text-decoration: none;
+  color: #f5f5f5;
+  font-size: 18px;
+  width: 95%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-radius: 4px;
+}
+.nav-text a:hover {
+  background-color: aqua;
+}
+.nav-menu-items {
+  width: 100%;
+}
+.navbar-toggle {
+  background-color: #060b26;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+ul {
+  padding-left: 0px;
+}
+.navbar {
+  width: 100%;
+}
+.navbar > nav {
+  padding: 15px;
+  background-color: #060b26;
+}
+.logo {
+  color: white;
+}
+.login-header {
+  background-color: white;
+  width: 100vw;
+  display: inline-flex;
+}
+.login-header > div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+}
+.headertxtclr {
+  color: white;
+}
+.user-options-dropdown {
+}
+.user-drp-button {
+}
+.position-to-top {
+  position: absolute !important;
+}
+.see-through {
+  background-color: transparent !important;
+}
+.sub_menu {
+  padding-left: 25px;
+}
