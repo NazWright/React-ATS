@@ -1,34 +1,29 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import ListingsItem from "./ListingsItem";
+import { Container, Spinner } from "react-bootstrap";
 
-export default class ListingsList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      listings: [],
-    };
+function ListingsList(props) {
+  if (props.loading) {
+    return (
+      <Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    );
   }
 
-  componentDidMount() {
-    axios.get("/api/listings").then((res) => {
-      if (res) {
-        console.log("Listings", res);
-        this.setState({ listings: res.data });
-      }
-      return;
+  function renderListings() {
+    //console.log("this is listings", props.listings);
+    // reverse for the newest listings first.
+    return props.listings.reverse().map((listing) => {
+      return <ListingsItem key={listing._id} listing={listing} />;
     });
   }
 
-  render() {
-    return (
-      <div>
-        {this.state.listings &&
-          this.state.listings.length > 0 &&
-          this.state.listings.map((listing) => {
-            return <ListingsItem listing={listing} />;
-          })}
-      </div>
-    );
-  }
+  return (
+    <div className="my-4">
+      <div>{renderListings()}</div>
+    </div>
+  );
 }
+
+export default ListingsList;

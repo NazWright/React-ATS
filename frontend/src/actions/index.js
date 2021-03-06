@@ -1,5 +1,11 @@
 import axios from "axios";
-import { FETCH_LISTING, FETCH_USER, FETCH_ZIPS } from "./types";
+import {
+  FETCH_LISTING,
+  FETCH_USER,
+  FETCH_ZIPS,
+  FETCH_FIELDS,
+  FETCH_SUBS,
+} from "./types";
 
 export const fetchUser = () => {
   return function (dispatch) {
@@ -44,12 +50,13 @@ export const fetchAllListings = () => {
   };
 };
 
-export const submitApplication = (AppData, dispatch) => {
-  axios.post("/api/applications/", AppData).then((res) => {
-    dispatch({ type: FETCH_USER, payload: res.data });
-  });
+export const submitApplication = (values, formName) => {
+  return function (dispatch) {
+    axios.post(`/api/submissions/${formName}`, values).then((res) => {
+      dispatch({ type: FETCH_USER, payload: res.data });
+    });
+  };
 };
-
 // dispatches to reducer fetch listing
 export const fetchApplication = () => {
   return function (dispatch) {
@@ -73,6 +80,38 @@ export const fetchZipCodes = () => {
     axios.get("/api/zipcodes").then((res) => {
       console.log("dispatch");
       dispatch({ type: FETCH_ZIPS, payload: res.data });
+    });
+  };
+};
+
+export const fetchForm = (formName) => {
+  return function (dispatch) {
+    axios.get(`/api/forms/${formName}`).then((res) => {
+      dispatch({ type: FETCH_FIELDS, payload: res.data });
+    });
+  };
+};
+
+export const fetchSubmissions = () => {
+  return function (dispatch) {
+    axios.get("/api/list").then((res) => {
+      dispatch({ type: FETCH_SUBS, payload: res.data });
+    });
+  };
+};
+
+export const login = (credentials) => {
+  return function (dispatch) {
+    axios.post("/api/login", credentials).then((res) => {
+      dispatch({ type: FETCH_USER, payload: res.data });
+    });
+  };
+};
+
+export const register = (credentials) => {
+  return function (dispatch) {
+    axios.post("/api/register", credentials).then((res) => {
+      dispatch({ type: FETCH_USER, payload: res.data });
     });
   };
 };

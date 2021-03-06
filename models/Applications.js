@@ -1,13 +1,18 @@
-const mongoose = require('mongoose')
-const {Schema} = mongoose;
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const ApplicationSchema = {
-    userId: String,
-    applications: [{
-        listingName: String,
-        dateSubmitted: Date,
-        status: String
-    }]
-}
-mongoose.model('applications', ApplicationSchema);
-
+const ApplicationSchema = new Schema({
+  userId: String,
+  applications: [
+    {
+      listingName: String,
+      dateSubmitted: Date,
+      status: String,
+      firstName: String,
+      lastName: String,
+      email: String,
+      phone: String,
+    },
+  ],
+});
+mongoose.model("applications", ApplicationSchema);

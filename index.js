@@ -4,16 +4,9 @@ const cookieSession = require("cookie-session");
 const passport = require("passport");
 const keys = require("./config/keys");
 const bodyParser = require("body-parser");
+const flash = require("req-flash");
 const cors = require("cors");
-require("./models/User");
-require("./models/Listings");
-require("./models/ListingsMetaData");
-require("./models/Applications");
-require("./models/Contacts");
-require("./models/AppWorkflow");
-require("./models/ClientMeta");
-require("./models/Clients");
-require("./models/Zips");
+require("./models");
 require("./services/passport");
 
 mongoose.connect(keys.mongoURI);
@@ -37,6 +30,7 @@ require("./routes/visitorRoutes")(app);
 require("./routes/billingRoutes")(app);
 require("./routes/locationRoutes")(app);
 require("./routes/clientRoutes")(app);
+require("./routes/formRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   // making sure express will serve up production assets

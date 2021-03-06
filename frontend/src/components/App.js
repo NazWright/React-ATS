@@ -10,25 +10,38 @@ import * as actions from "../actions";
 import ListingForm from "./listings/ListingForm";
 import "materialize-css";
 import Profile from "./Profile";
-import ApplicationForm from "../components/applications/applicationForm";
+import ApplyForm from "./applications/ApplyForm";
 import React, { Component } from "react";
 import Pricing from "./pricing/PricingPage";
 import Success from "./Success";
 import Failure from "./Failure";
-import ListingList from "./listings/ListingsList";
 import ClientForm from "./clients/ClientForm";
 import ClientList from "./clients/ClientList";
+import Map from "./maps/Map";
+import ProgressBar from "./workflow/ProgressBar";
+import Job from "./listings/Job";
+import ListingsPage from "./listings/ListingsPage";
+import Workflow from "./workflow/Workflow";
+import Login from "./Login";
+import Signup from "./Signup";
+import Applicant from "./workflow/Applicant";
 
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
+    this.props.fetchListing();
   }
 
   renderLanding() {
     return <Landing />;
   }
 
+  Child() {
+    console.log(this.props.route.params);
+  }
+
   render() {
+    console.log(this.props.listings);
     return (
       <div className="App">
         <Router>
@@ -39,13 +52,37 @@ class App extends Component {
             <Route path="/contacts" exact component={Contacts} />
             <Route path="/add-listings" exact component={ListingForm} />
             <Route path="/profile" exact component={Profile} />
-            <Route path="/apply" exact component={ApplicationForm} />
+            <Route
+              path="/apply/:id"
+              render={(props) => {
+                return <ApplyForm {...props} />;
+              }}
+            />
             <Route path="/pricing" exact component={Pricing} />
             <Route path="/success" exact component={Success} />
             <Route path="/failure" exact component={Failure} />
-            <Route path="/listings" exact component={ListingList} />
+            <Route path="/listings" exact component={ListingsPage} />
+            <Route path="/add-listings" exact component={ListingForm} />
             <Route path="/add-client" exact component={ClientForm} />
             <Route path="/view-client" exact component={ClientList} />
+            <Route path="/workflow" exact component={Workflow} />
+            <Route path="/map" exact component={Map} />
+            <Route path="/progress" exact component={ProgressBar} />
+            <Route path="/signup" exact component={Signup} />
+            <Route path="/login" exact component={Login} />
+            <Route
+              path="/applicant/:id"
+              render={(props) => {
+                return <Applicant {...props} />;
+              }}
+            />
+
+            <Route
+              path="/job/:id"
+              render={(props) => {
+                return <Job {...props} />;
+              }}
+            />
           </Switch>
         </Router>
       </div>
@@ -55,8 +92,4 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ listings }) {
-  return { listings };
-}
-
-export default connect(mapStateToProps, actions)(App);
+export default connect(null, actions)(App);

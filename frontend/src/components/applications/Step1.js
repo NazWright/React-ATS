@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function applicationForm() {
+export const Step1 = () => {
   return <div></div>;
-}
+};

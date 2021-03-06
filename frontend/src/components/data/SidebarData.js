@@ -23,7 +23,7 @@ export const EmployerMenu = [
     ],
   },
   {
-    title: "Workflow",
+    title: "Applications",
     path: "/workflow",
     icon: <IoIcons.IoIosGitNetwork />,
     cName: "nav-text",
@@ -64,5 +64,62 @@ export const ApplicantMenu = [
     path: "/contacts",
     icon: <AiIcons.AiOutlineContacts />,
     cName: "nav-text",
+  },
+  {
+    title: "Application Status",
+    path: "/workflow",
+    icon: <IoIcons.IoIosGitNetwork />,
+    cName: "nav-text",
+    // submenus
+  },
+];
+
+export const AdminMenu = [
+  {
+    title: "Dashboard",
+    path: "/dashboard",
+    icon: <AiIcons.AiFillHome />,
+    cName: "nav-text",
+  },
+  {
+    title: "Client",
+    path: "/client",
+    icon: <AiIcons.AiOutlineContacts />,
+    cName: "nav-text",
+    sub_menu: [
+      { title: "Add Client", path: "/add-client", cName: "nav-text" },
+      { title: "View Clients", path: "/view-client", cName: "nav-text" },
+    ],
+  },
+  {
+    title: "Applications",
+    path: "/workflow",
+    icon: <IoIcons.IoIosGitNetwork />,
+    cName: "nav-text",
+    // submenus
+  },
+  {
+    title: "Job Orders",
+    path: "/job-orders",
+    icon: <GiIcons.GiSuitcase />,
+    cName: "nav-text",
+  },
+  {
+    title: "Job Listings",
+    icon: <RiIcons.RiSuitcaseLine />,
+    cName: "nav-text",
+    sub_menu: [
+      { title: "View Listings", path: "/listings", cName: "nav-text" },
+      { title: "Post A Job", path: "/add-listings", cName: "nav-text" },
+    ],
+  },
+  {
+    title: "Admin Console",
+    icon: <RiIcons.RiSuitcaseLine />,
+    cName: "nav-text",
+    sub_menu: [
+      { title: "Create User", path: "/create-user", cName: "nav-text" },
+      { title: "Create A Form", path: "/create-form", cName: "nav-text" },
+    ],
   },
 ];

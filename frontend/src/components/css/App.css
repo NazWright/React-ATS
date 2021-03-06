@@ -12,6 +12,21 @@ body {
 .add-full-height {
   height: 100%;
 }
+.m-r-10 {
+  margin-right: 10px;
+}
+.m-t-100 {
+  margin-top: 100px;
+}
+.m-r-20 {
+  margin-right: 20px;
+}
+.m-r-5 {
+  margin-right: 5px;
+}
+.m-t-10 {
+  margin-top: 10px;
+}
 .add-full-width {
   width: 100%;
 }
@@ -158,3 +173,23 @@ body {
 /* Listing page css */
 
 /* Listing page css end*/
+
+.map {
+  height: 300px;
+}
+.padding20-40 {
+  padding: 20px 40px;
+}
+.bg-gray {
+  background-color: #f6f6f6;
+}
+.float-container {
+  border: 3px solid #fff;
+  padding: 20px;
+}
+
+.float-child {
+  width: 50%;
+  float: left;
+  padding: 20px;
+}

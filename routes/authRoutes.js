@@ -7,6 +7,11 @@ const Stripe = require("stripe");
 const stripe = Stripe(
   "sk_test_51I3QyMEah8AfDWDxYhy3ELRbNQsXDw7GgYqrabNqjUbheDO7DFBxqdxf9NKYlkoglN9AjcvCkjZLeB44Ld5KiKGU00TFMdWEX9"
 );
+const bcrypt = require("bcrypt");
+const User = mongoose.model("users");
+const tf = require("@tensorflow/tfjs-node");
+//const tfvis = require("@tensorflow/tfjs-vis");
+const fetch = require("node-fetch");
 module.exports = (app) => {
   const ROLES = {
     Admin: "Admin",
@@ -14,6 +19,44 @@ module.exports = (app) => {
     Recruiter: "Recruiter",
     Applicant: "Applicant",
   };
+
+  app.post(
+    "/api/login",
+    passport.authenticate("local", {
+      failureRedirect: "/api/login",
+      successRedirect: "/",
+      failureFlash: true,
+    })
+  );
+
+  app.get("/api/login", () => {
+    res.redirect("/");
+  });
+
+  app.post("/api/register", async (req, res) => {
+    const { email, password, first, last, role, parent } = req.body;
+    // user password hash generate 10 times for security
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      // create a user
+      const newUser = await new User({
+        googleId: null,
+        familyName: last,
+        givenName: first,
+        email: email,
+        password: hashedPassword,
+        role: role,
+        isAdmin: parent === null ? true : false,
+        parent: parent,
+        cust_Id: null,
+        subscription: null,
+        accounts: 0,
+      }).save();
+    } catch {
+      // back to the homepage
+      res.redirect("/");
+    }
+  });
 
   app.get(
     "/auth/google/applicant",
@@ -58,10 +101,7 @@ module.exports = (app) => {
         req.user.role = req.query.state;
         if (req.user.role === "Applicant") {
           req.user.isAdmin = false;
-          req.user.applications = new Application({
-            userId: req.user.googleId,
-            applications: [],
-          }).save();
+          req.user.parent = "Default";
         } else {
           req.user.isAdmin = true;
           const customer = stripe.customers
@@ -96,5 +136,49 @@ module.exports = (app) => {
   });
 
   // come back to change this employer to all admins
-  app.get("/api/create_user", requireLogin, (req, res) => {});
+  app.get("/api/create_user", requireLogin, (req, res) => {
+    res.send(req.user);
+  });
+
+  app.get("/api/test-ai", async (req, res) => {
+    const houseSalesDataSet = tf.data.csv("file://../kc_house_data.csv");
+    const sampleDataSet = houseSalesDataSet.take(10);
+    const dataArray = await sampleDataSet.toArray();
+    console.log(dataArray);
+
+    const points = houseSalesDataSet.map((record) => ({
+      x: record.sqft_living,
+      y: record.price,
+    }));
+    console.log(await points.toArray());
+  });
+  app.get("/api/setup", (req, res) => {
+    global
+      .fetch("https://www.universal-tutorial.com/api/getaccesstoken", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "api-token":
+            "MBYimJxqn3snnb5hEB1mY1dk9t5Ywz-keNQugTbUjPEVzRfHHcfWQnXm1QO__xNFde4",
+          "user-email": "nazzywright@gmail.com",
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  });
 };
+
+/* async function plot(pointsArray, featureName) {
+  tfvis.render.scatterplot(
+    { name: `${featureName} vs House Price ` },
+    { values: [pointsArray], series: ["original"] },
+    {
+      xLabel: featureName,
+      yLabel: "Price",
+    }
+  ); 
+
+  } */
+
+// routes to set up the connection the countries and states api, move elsewhere in refactor
