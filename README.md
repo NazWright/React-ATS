@@ -15,4 +15,5 @@ This is an applicant tracking system that takes care of all recruiting needs. Fo
         The string is used as a name to describe your test suite
         The fat arrow ( ()=> {} ) function basically encapsulates all of your tests
         for this particular test suite. Within this function you write a series
-        of "it" functions which represent your tests. For more on Mocha and mocha test driven development visit: https://mochajs.org/
+        of "it" functions which represent your tests.
+        For more on Mocha and mocha test driven development visit: https://mochajs.org/
