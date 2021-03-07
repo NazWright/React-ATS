@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const subscriptionSchema = require("./Subscription");
 
 const userSchema = new Schema({
   googleId: {
@@ -39,7 +38,10 @@ const userSchema = new Schema({
     type: String,
     required: false,
   },
-  subscription: subscriptionSchema,
+  subscription: {
+    type: Object,
+    required: false,
+  },
   accounts: {
     type: Number,
     required: false,
