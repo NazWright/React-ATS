@@ -8,7 +8,8 @@
                     1. Recruiters should be able to see the best 10 candidates for a job listing at a time.
                     2. Recruiters should be able to use this system to search and filter submitted job applications
                     3. Applicants can view their job application submissions 
-                    4. Applicants can recieve job recommendations based on their searches, skills
+                    4. Applicants can recieve job recommendations based on their searches, 
+                       skills that match job descriptions within the agency and their location.
 # Description:
 
           An Applicant tracking system created using test driven development with Node.js and Mocha,
@@ -16,11 +17,11 @@
 
 # Mocha Test Driven Development
 
-           Mocha is a framework used to run tests on single units of code written using Node.js.
-           The framework uses a describe() function
-           This function takes a string and a fat arrow function
-           The string is used as a name to describe your test suite
-           The fat arrow ( ()=> {} ) function basically encapsulates all of your tests
-           for this particular test suite. Within this function you write a series
-           of "it" functions which represent your tests.
-           For more on Mocha and mocha test driven development visit: https://mochajs.org/
+          Mocha is a framework used to run tests on single units of code written using Node.js.
+          The framework uses a describe() function
+          This function takes a string and a fat arrow function
+          The string is used as a name to describe your test suite
+          The fat arrow ( ()=> {} ) function basically encapsulates all of your tests
+          for this particular test suite. Within this function you write a series
+          of "it" functions which represent your tests.
+          For more on Mocha and mocha test driven development visit: https://mochajs.org/
