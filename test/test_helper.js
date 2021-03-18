@@ -5,7 +5,7 @@ const keys = require("../config/keys");
 mongoose.Promise = global.Promise;
 
 before((done) => {
-  mongoose.connect(keys.mongoURI);
+  mongoose.connect(keys.testMongoURI);
   mongoose.connection
     .once("open", () => {
       done();
@@ -18,7 +18,12 @@ before((done) => {
 
 // run this before starting tests.
 beforeEach((done) => {
-  mongoose.connection.collections.users.drop(() => {
-    done();
-  });
+  mongoose.connection.collections.users
+    .drop()
+    .then(() => {
+      done();
+    })
+    .catch(() => {
+      done();
+    });
 });

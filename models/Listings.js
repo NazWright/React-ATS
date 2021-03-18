@@ -13,7 +13,6 @@ const pointSchema = new Schema({
 const ListingSchema = new Schema({
   publisher_id: String,
   title: String,
-  jobType: String,
   geometry: pointSchema,
   jobinfo: {
     compensation: String,

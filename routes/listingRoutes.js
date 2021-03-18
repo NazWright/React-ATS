@@ -5,10 +5,7 @@ const ListingMeta = mongoose.model("listings-metadata");
 const Submissions = mongoose.model("submissions");
 
 module.exports = (app) => {
-  app.get("/api/listings", requireLogin, async (req, res) => {
-    const listings = await Listing.find({ publisher_id: req.user.googleId });
-    res.send(listings);
-  });
+  app.get("/api/listings", (req, res) => {});
 
   app.get("/api/listings/:listingName", (req, res) => {
     const listingName = req.params.listingName;

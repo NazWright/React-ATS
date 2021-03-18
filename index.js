@@ -9,7 +9,9 @@ const cors = require("cors");
 require("./models");
 require("./services/passport");
 
-mongoose.connect(keys.mongoURI);
+if (process.env.NODE_ENV !== "test") {
+  mongoose.connect(keys.mongoURI);
+}
 
 const app = express();
 app.use(bodyParser.json());
@@ -45,6 +47,7 @@ if (process.env.NODE_ENV === "production") {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
+module.exports = app;
 
 // host name
 // https://cryptic-plateau-14392.herokuapp.com/
