@@ -7,11 +7,12 @@ const Stripe = require("stripe");
 const stripe = Stripe(
   "sk_test_51I3QyMEah8AfDWDxYhy3ELRbNQsXDw7GgYqrabNqjUbheDO7DFBxqdxf9NKYlkoglN9AjcvCkjZLeB44Ld5KiKGU00TFMdWEX9"
 );
-const bcrypt = require("bcrypt");
 const User = mongoose.model("users");
 const tf = require("@tensorflow/tfjs-node");
 //const tfvis = require("@tensorflow/tfjs-vis");
 const fetch = require("node-fetch");
+const UsersController = require("../controllers/usersController");
+
 module.exports = (app) => {
   const ROLES = {
     Admin: "Admin",
@@ -33,30 +34,7 @@ module.exports = (app) => {
     res.redirect("/");
   });
 
-  app.post("/api/register", async (req, res) => {
-    const { email, password, first, last, role, parent } = req.body;
-    // user password hash generate 10 times for security
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      // create a user
-      const newUser = await new User({
-        googleId: null,
-        familyName: last,
-        givenName: first,
-        email: email,
-        password: hashedPassword,
-        role: role,
-        isAdmin: parent === null ? true : false,
-        parent: parent,
-        cust_Id: null,
-        subscription: null,
-        accounts: 0,
-      }).save();
-    } catch {
-      // back to the homepage
-      res.redirect("/");
-    }
-  });
+  app.post("/api/users", UsersController.create);
 
   app.get(
     "/auth/google/applicant",

@@ -8,6 +8,7 @@ const flash = require("req-flash");
 const cors = require("cors");
 require("./models");
 require("./services/passport");
+const check = require("./middlewares/check");
 
 if (process.env.NODE_ENV !== "test") {
   mongoose.connect(keys.mongoURI);
@@ -34,17 +35,17 @@ require("./routes/locationRoutes")(app);
 require("./routes/clientRoutes")(app);
 require("./routes/formRoutes")(app);
 
+app.use(check);
+
 if (process.env.NODE_ENV === "production") {
   // making sure express will serve up production assets
   app.use(express.static("frontend/build"));
-
   // express will serve up index.html
   const path = require("path");
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
   });
 }
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
 module.exports = app;
