@@ -10,4 +10,8 @@ module.exports = (app) => {
   app.post("/api/listings", (req, res) => {});
 
   app.get("/api/listings/all", (req, res) => {});
+
+  app.delete("/api/listings/:listingId", ListingsController.deleteOne);
+
+  app.delete("/api/listings", ListingsController.deleteMany);
 };
