@@ -8,6 +8,7 @@ const app = require("../index");
 describe("Listings Controller", () => {
   let employer;
   let testListing;
+  let listingId; // local var for the ever changing listing id
 
   before(async () => {
     await mongoose.connection.collections.listings.drop();
@@ -23,23 +24,6 @@ describe("Listings Controller", () => {
       cust_Id: "cus_IlbKdIZxTyrSKW",
       subscription: null,
       accounts: 0,
-    });
-  });
-
-  beforeEach(async () => {
-    testListing = await Listing.create({
-      publisher_id: employer._id,
-      title: "Test Listing 2",
-      jobinfo: {
-        compensation: "15/hr",
-        benefits: "none",
-        jobType: "Full-Time",
-        category: "Default",
-        description: "This is the description",
-      },
-      dateCreated: Date.now(),
-      status: "Active",
-      new: true,
     });
   });
 
@@ -61,9 +45,24 @@ describe("Listings Controller", () => {
         const matchedListing = await Listing.findOne({
           publisher_id: employer._id,
         });
+
+        // record exists
         assert(matchedListing !== null);
+        listingId = matchedListing._id;
       });
   });
+
+  it("Gets to /api/listing/:listingId to retrieve a listing", () => {
+    request(app)
+      .get(`/api/listings/${listingId}`)
+      .end((response) => {
+        console.log(response);
+      });
+  });
+
+  it("Gets to /api/listings?name=name retrieves a listing or group of listings with the given name", () => {});
+
+  it("Puts to /api/listing/:listingId updates a particular listing by id", () => {});
 
   it("Deletes to /api/listings/:listingId deletes a specfic listing", async () => {
     const matchedListing = await Listing.findOne({

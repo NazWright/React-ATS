@@ -14,4 +14,6 @@ module.exports = (app) => {
   app.delete("/api/listings/:listingId", ListingsController.deleteOne);
 
   app.delete("/api/listings", ListingsController.deleteMany);
+
+  //app.put("/api/listings/:listingId", ListingsController.updateOne);
 };

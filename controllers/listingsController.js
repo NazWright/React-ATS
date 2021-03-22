@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { deleteMany } = require("../models/Subscription");
+const { deleteMany, updateOne } = require("../models/Subscription");
 const Listing = mongoose.model("listings");
 
 module.exports = {
