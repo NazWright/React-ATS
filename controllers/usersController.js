@@ -27,4 +27,15 @@ module.exports = {
       res.redirect("/");
     }
   },
+
+  async getById(req, res) {
+    const { userId } = req.params;
+    const matchedUser = User.findById(userId);
+    res.send(matchedUser);
+  },
+
+  //get user by id
+  // get a list of users that match the given criteria
+  // update a user by a list of criteria and id
+  // delete a user
 };
