@@ -62,11 +62,12 @@ describe("Listings Controller", () => {
     }
   });
 
-  it("Gets to /api/listings?name=name retrieves a listing or group of listings with the given name", async () => {
+  it("Gets to /api/listings?title=name retrieves a listing or group of listings with the given name", async () => {
     const server = request(app);
     try {
-      const response = await server.get("/api/listings?name=Test%20Listing");
+      const response = await server.get("/api/listings?title=Test%20Listing");
       assert(response.body[0].title, "Test Listing");
+      assert(response.body[0].jobinfo.description, "This is the description");
     } catch (error) {
       throw error;
     }

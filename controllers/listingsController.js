@@ -41,9 +41,9 @@ module.exports = {
     res.send(matchedListing);
   },
 
-  async filterListingsByName(req, res) {
-    const { name } = req.query;
-    const matchedListings = await Listing.find({ title: name });
+  async filterListings(req, res) {
+    const filter = { ...req.query };
+    const matchedListings = await Listing.find(filter);
     res.send(matchedListings);
   },
 

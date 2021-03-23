@@ -15,7 +15,7 @@ module.exports = (app) => {
 
   app.delete("/api/listings", ListingsController.deleteMany);
 
-  app.get("/api/listings", ListingsController.filterListingsByName);
+  app.get("/api/listings", ListingsController.filterListings);
 
   app.put("/api/listings/:listingId", ListingsController.updateOne);
 };
