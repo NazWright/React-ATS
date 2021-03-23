@@ -6,9 +6,12 @@ const mongoose = require("mongoose");
 const User = mongoose.model("users");
 
 describe("Users Controller", () => {
+  let testUser;
+  let hashedPassword;
+
   it(" POSTS to /api/users creates a new user", async () => {
     const password = "IamNazereWright080599";
-    const hashedPassword = await bcrypt.hash(password, 10);
+    hashedPassword = await bcrypt.hash(password, 10);
     const count = await User.countDocuments();
     request(app)
       .post("/api/users")
@@ -24,5 +27,12 @@ describe("Users Controller", () => {
         const newCount = await User.countDocuments();
         assert(count + 1 === newCount);
       });
+  });
+
+  it("GETS to /api/users/:userId", async () => {
+    testUser = await User.findOne({ email: "nazwrightthedeveloper@gmail.com" });
+    const server = request(app);
+    const response = await server.get(`/api/users/${testUser._id}`);
+    assert(response.body._id, testUser._id);
   });
 });
