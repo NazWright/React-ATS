@@ -27,7 +27,7 @@ describe("Listings Controller", () => {
     });
   });
 
-  it("Posts to /api/listings/:id creates a new listing for the user", async () => {
+  it("Posts to /api/listings/:id creates a new listing for the user", (done) => {
     request(app)
       .post(`/api/listings/${employer._id}`)
       .send({
@@ -41,50 +41,60 @@ describe("Listings Controller", () => {
           description: "This is the description",
         },
       })
-      .end(async () => {
-        const matchedListing = await Listing.findOne({
-          publisher_id: employer._id,
-        });
-
-        // record exists
-        assert(matchedListing !== null);
-        listingId = matchedListing._id;
+      .expect(200)
+      .then((response) => {
+        assert(response.body.publisher_id, employer._id);
+        testListing = response.body;
+        done();
+      })
+      .catch((err) => {
+        done(err);
       });
   });
 
-  it("Gets to /api/listing/:listingId to retrieve a listing", () => {
-    request(app)
-      .get(`/api/listings/${listingId}`)
-      .end((response) => {
-        console.log(response);
-      });
+  it("Gets to /api/listing/:listingId to retrieve a listing", async () => {
+    const server = request(app);
+    try {
+      const response = await server.get(`/api/listings/${testListing._id}`);
+      assert(response.body._id, testListing._id);
+    } catch (error) {
+      throw error;
+    }
   });
 
-  it("Gets to /api/listings?name=name retrieves a listing or group of listings with the given name", () => {});
-
-  it("Puts to /api/listing/:listingId updates a particular listing by id", () => {});
-
-  it("Deletes to /api/listings/:listingId deletes a specfic listing", async () => {
-    const matchedListing = await Listing.findOne({
-      publisher_id: employer._id,
-    });
-    request(app)
-      .delete(`/api/listings/${matchedListing._id}`)
-      .end(async () => {
-        // try to find the deleted listing to make sure it is not found.
-        const deletedListing = await Listing.findById(matchedListing._id);
-        assert(deletedListing === null);
-      });
+  it("Gets to /api/listings?name=name retrieves a listing or group of listings with the given name", async () => {
+    const server = request(app);
+    try {
+      const response = await server.get("/api/listings?name=Test%20Listing");
+      assert(response.body[0].title, "Test Listing");
+    } catch (error) {
+      throw error;
+    }
   });
 
-  it("Deletes to /api/listings/:userId deletes all listings from a given user", () => {
-    request(app)
-      .delete(`/api/listings/${employer._id}`)
-      .end(async () => {
-        const deletedListings = await Listing.find({
-          publisher_id: employer._id,
-        });
-        assert(deletedListings === null);
-      });
-  });
+  // it("Puts to /api/listing/:listingId updates a particular listing by id", () => {});
+
+  // it("Deletes to /api/listings/:listingId deletes a specfic listing", async () => {
+  //   const matchedListing = await Listing.findOne({
+  //     publisher_id: employer._id,
+  //   });
+  //   request(app)
+  //     .delete(`/api/listings/${matchedListing._id}`)
+  //     .end(async () => {
+  //       // try to find the deleted listing to make sure it is not found.
+  //       const deletedListing = await Listing.findById(matchedListing._id);
+  //       assert(deletedListing === null);
+  //     });
+  // });
+
+  // it("Deletes to /api/listings/:userId deletes all listings from a given user", () => {
+  //   request(app)
+  //     .delete(`/api/listings/${employer._id}`)
+  //     .end(async () => {
+  //       const deletedListings = await Listing.find({
+  //         publisher_id: employer._id,
+  //       });
+  //       assert(deletedListings === null);
+  //     });
+  // });
 });

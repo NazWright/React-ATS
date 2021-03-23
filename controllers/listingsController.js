@@ -3,6 +3,7 @@ const { deleteMany, updateOne } = require("../models/Subscription");
 const Listing = mongoose.model("listings");
 
 module.exports = {
+  // create a listing
   async create(req, res) {
     const { title, location, jobinfo } = req.body;
     const { userId } = req.params;
@@ -19,19 +20,30 @@ module.exports = {
 
     res.send(job);
   },
-
-  async deleteOne(req, res) {
+  // delete a particular listing by its id
+  async deleteById(req, res) {
     const { listingId } = req.params;
     const deletedListing = await Listing.findByIdAndDelete(listingId);
     res.send(deletedListing);
   },
-
+  // delete all of the listings created by this user
   async deleteMany(req, res) {
     const { userId } = req.query;
     const deletedListings = await Listing.remove({
       publisher_id: { $in: [userId] },
     });
-    console.log(deletedListings, "a");
     res.send(deletedListings);
+  },
+  // retrieve one particular listing by its id
+  async getById(req, res) {
+    const { listingId } = req.params;
+    const matchedListing = await Listing.findById(listingId);
+    res.send(matchedListing);
+  },
+
+  async filterListingsByName(req, res) {
+    const { name } = req.query;
+    const matchedListings = await Listing.find({ title: name });
+    res.send(matchedListings);
   },
 };
