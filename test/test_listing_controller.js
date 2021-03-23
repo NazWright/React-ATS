@@ -87,27 +87,20 @@ describe("Listings Controller", () => {
     }
   });
 
-  // it("Deletes to /api/listings/:listingId deletes a specfic listing", async () => {
-  //   const matchedListing = await Listing.findOne({
-  //     publisher_id: employer._id,
-  //   });
-  //   request(app)
-  //     .delete(`/api/listings/${matchedListing._id}`)
-  //     .end(async () => {
-  //       // try to find the deleted listing to make sure it is not found.
-  //       const deletedListing = await Listing.findById(matchedListing._id);
-  //       assert(deletedListing === null);
-  //     });
-  // });
-
-  // it("Deletes to /api/listings/:userId deletes all listings from a given user", () => {
-  //   request(app)
-  //     .delete(`/api/listings/${employer._id}`)
-  //     .end(async () => {
-  //       const deletedListings = await Listing.find({
-  //         publisher_id: employer._id,
-  //       });
-  //       assert(deletedListings === null);
-  //     });
-  // });
+  it("Deletes to /api/listings/:listingId deletes a specfic listing", async () => {
+    try {
+      const matchedListing = await Listing.findOne({
+        publisher_id: employer._id,
+      });
+      const server = request(app);
+      const response = await server.delete(
+        `/api/listings/${matchedListing._id}`
+      );
+      // try to find the deleted listing to make sure it is not found.
+      const deletedListing = await Listing.findById(matchedListing._id);
+      assert(deletedListing === null);
+    } catch (error) {
+      throw error;
+    }
+  });
 });
