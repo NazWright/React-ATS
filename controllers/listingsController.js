@@ -46,4 +46,13 @@ module.exports = {
     const matchedListings = await Listing.find({ title: name });
     res.send(matchedListings);
   },
+
+  async updateOne(req, res) {
+    const { title } = req.body;
+    const { listingId } = req.params;
+    const matchedListing = await Listing.findById(listingId);
+    matchedListing.title = title;
+    const updatedListing = await matchedListing.save();
+    res.send(updatedListing);
+  },
 };
