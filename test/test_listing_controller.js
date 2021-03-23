@@ -11,20 +11,24 @@ describe("Listings Controller", () => {
   let listingId; // local var for the ever changing listing id
 
   before(async () => {
-    await mongoose.connection.collections.listings.drop();
-    employer = await User.create({
-      googleId: "114983407291327089129",
-      familyName: "Wright",
-      givenName: "Nazere",
-      email: "nxwright@aggies.ncat.edu",
-      password: null,
-      role: "Admin",
-      isAdmin: true,
-      parent: null,
-      cust_Id: "cus_IlbKdIZxTyrSKW",
-      subscription: null,
-      accounts: 0,
-    });
+    try {
+      await mongoose.connection.collections.listings.drop();
+      employer = await User.create({
+        googleId: "114983407291327089129",
+        familyName: "Wright",
+        givenName: "Nazere",
+        email: "nxwright@aggies.ncat.edu",
+        password: null,
+        role: "Admin",
+        isAdmin: true,
+        parent: null,
+        cust_Id: "cus_IlbKdIZxTyrSKW",
+        subscription: null,
+        accounts: 0,
+      });
+    } catch (error) {
+      throw error;
+    }
   });
 
   it("Posts to /api/listings/:id creates a new listing for the user", async () => {
@@ -73,10 +77,14 @@ describe("Listings Controller", () => {
 
   it("Puts to /api/listing/:listingId updates a particular listing by id", async () => {
     const server = request(app);
-    const response = await server
-      .put(`/api/listings/${testListing._id}`)
-      .send({ status: "Inactive" });
-    assert(response.body.status, "Inactive");
+    try {
+      const response = await server
+        .put(`/api/listings/${testListing._id}`)
+        .send({ status: "Inactive" });
+      assert(response.body.status, "Inactive");
+    } catch (error) {
+      throw error;
+    }
   });
 
   // it("Deletes to /api/listings/:listingId deletes a specfic listing", async () => {
