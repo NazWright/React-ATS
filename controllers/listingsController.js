@@ -1,29 +1,59 @@
 const mongoose = require("mongoose");
-const User = mongoose.model("users");
+const { deleteMany, updateOne } = require("../models/Subscription");
 const Listing = mongoose.model("listings");
 
-describe("Listings Controller", () => {
-  let jobEmployer;
+module.exports = {
+  // create a listing
+  async create(req, res) {
+    const { title, location, jobinfo } = req.body;
+    const { userId } = req.params;
 
-  //   it("POSTS to /api/listings creates a new job listing", async () => {
-  //     jobEmployer = await new User({
-  //       googleId: "114983407291327089129",
-  //       familyName: "Wright",
-  //       givenName: "Nazere",
-  //       email: "nxwright@aggies.ncat.edu",
-  //       password: null,
-  //       role: "Admin",
-  //       isAdmin: true,
-  //       parent: null,
-  //       cust_Id: "cus_IlbKdIZxTyrSKW",
-  //       subscription: null,
-  //       accounts: 1,
-  //     })
-  //       .save()
-  //       .catch((err) => {
-  //         console.warn(err);
-  //       });
+    const job = await Listing.create({
+      publisher_id: userId,
+      title: title,
+      location: location,
+      jobinfo: jobinfo,
+      dateCreated: Date.now(),
+      status: "Active",
+      new: true,
+    });
 
-  //     assert( )
-  //   });
-});
+    res.send(job);
+  },
+  // delete a particular listing by its id
+  async deleteById(req, res) {
+    const { listingId } = req.params;
+    const deletedListing = await Listing.findByIdAndDelete(listingId);
+    res.send(deletedListing);
+  },
+  // delete all of the listings created by this user
+  async deleteMany(req, res) {
+    const { userId } = req.query;
+    const deletedListings = await Listing.remove({
+      publisher_id: { $in: [userId] },
+    });
+    res.send(deletedListings);
+  },
+  // retrieve one particular listing by its id
+  async getById(req, res) {
+    const { listingId } = req.params;
+    const matchedListing = await Listing.findById(listingId);
+    res.send(matchedListing);
+  },
+
+  async filterListings(req, res) {
+    const filter = { ...req.query };
+    const matchedListings = await Listing.find(filter);
+    res.send(matchedListings);
+  },
+
+  async updateOne(req, res) {
+    const updateDetails = { ...req.body };
+    const { listingId } = req.params;
+    const updatedListing = await Listing.findByIdAndUpdate(
+      listingId,
+      updateDetails
+    );
+    res.send(updatedListing);
+  },
+};
