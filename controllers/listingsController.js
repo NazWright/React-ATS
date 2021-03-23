@@ -48,11 +48,12 @@ module.exports = {
   },
 
   async updateOne(req, res) {
-    const { title } = req.body;
+    const updateDetails = { ...req.body };
     const { listingId } = req.params;
-    const matchedListing = await Listing.findById(listingId);
-    matchedListing.title = title;
-    const updatedListing = await matchedListing.save();
+    const updatedListing = await Listing.findByIdAndUpdate(
+      listingId,
+      updateDetails
+    );
     res.send(updatedListing);
   },
 };

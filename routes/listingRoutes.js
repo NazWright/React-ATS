@@ -18,6 +18,4 @@ module.exports = (app) => {
   app.get("/api/listings", ListingsController.filterListingsByName);
 
   app.put("/api/listings/:listingId", ListingsController.updateOne);
-
-  //app.put("/api/listings/:listingId", ListingsController.updateOne);
 };

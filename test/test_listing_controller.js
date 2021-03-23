@@ -76,8 +76,8 @@ describe("Listings Controller", () => {
     const server = request(app);
     const response = await server
       .put(`/api/listings/${testListing._id}`)
-      .send({ title: "Update Test Listing" });
-    assert(response.body.title, "Update Test Listing");
+      .send({ status: "Inactive" });
+    assert(response.body.status, "Inactive");
   });
 
   // it("Deletes to /api/listings/:listingId deletes a specfic listing", async () => {
