@@ -27,29 +27,27 @@ describe("Listings Controller", () => {
     });
   });
 
-  it("Posts to /api/listings/:id creates a new listing for the user", (done) => {
-    request(app)
-      .post(`/api/listings/${employer._id}`)
-      .send({
-        title: "Test Listing",
-        location: null,
-        jobinfo: {
-          compensation: "15/hr",
-          benefits: "none",
-          jobType: "Full-Time",
-          category: "Default",
-          description: "This is the description",
-        },
-      })
-      .expect(200)
-      .then((response) => {
-        assert(response.body.publisher_id, employer._id);
-        testListing = response.body;
-        done();
-      })
-      .catch((err) => {
-        done(err);
-      });
+  it("Posts to /api/listings/:id creates a new listing for the user", async () => {
+    const server = request(app);
+    try {
+      const createdListingResponse = await server
+        .post(`/api/listings/${employer._id}`)
+        .send({
+          title: "Test Listing",
+          location: null,
+          jobinfo: {
+            compensation: "15/hr",
+            benefits: "none",
+            jobType: "Full-Time",
+            category: "Default",
+            description: "This is the description",
+          },
+        });
+      assert(createdListingResponse.body.publisher_id, employer._id);
+      testListing = createdListingResponse.body;
+    } catch (error) {
+      throw error;
+    }
   });
 
   it("Gets to /api/listing/:listingId to retrieve a listing", async () => {
