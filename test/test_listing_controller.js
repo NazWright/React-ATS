@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-const User = mongoose.model("users");
-const Listing = mongoose.model("listings");
 const assert = require("assert");
 const request = require("supertest");
 const app = require("../index");
