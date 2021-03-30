@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const assert = require("assert");
 const request = require("supertest");
+const User = require("../models/User");
+const Listing = require("../models/Listings");
 const app = require("../index");
 
 describe("Listings Controller", () => {

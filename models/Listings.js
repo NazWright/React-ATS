@@ -27,4 +27,5 @@ const ListingSchema = new Schema({
   new: Boolean,
 });
 
-mongoose.model("listings", ListingSchema);
+const Listing = mongoose.model("listings", ListingSchema);
+module.exports = Listing;

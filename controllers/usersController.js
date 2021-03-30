@@ -3,54 +3,29 @@ const mongoose = require("mongoose");
 const User = mongoose.model("users");
 
 module.exports = {
-  isAdmin(role) {
-    if (role === "Applicant" || role === "Employer" || role === "Recruiter") {
-      return false;
-    }
-    return true;
-  },
+  // isAdmin(role) {
+  //   if (role === "Applicant" || role === "Employer" || role === "Recruiter") {
+  //     return false;
+  //   }
+  //   return true;
+  // },
 
-  async hashPassword(password) {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    return hashedPassword;
-  },
+  // async hashPassword(password) {
+  //   const hashedPassword = await bcrypt.hash(password, 10);
+  //   return hashedPassword;
+  // },
 
   async createUser(req, res) {
-    const { email, password, first, last, role, parent } = req.body;
-    //const hasAdminCap = this.isAdmin(role);
-    const testUser = await new User({
-      googleId: "114983407291327089129",
-      familyName: "Wright",
-      givenName: "Nazere",
-      email: "nxwright@aggies.ncat.edu",
-      password: null,
-      role: "Admin",
-      isAdmin: true,
-      parent: null,
-      cust_Id: "cus_IlbKdIZxTyrSKW",
-      subscription: null,
-      accounts: 0,
-    }).save();
-    // try {
-    //   const newUser = await User.create({
-    //     googleId: null,
-    //     familyName: last,
-    //     givenName: first,
-    //     email: email,
-    //     password: this.hashPassword(password),
-    //     role: role,
-    //     isAdmin: hasAdminCap,
-    //     parent: parent,
-    //     cust_Id: null,
-    //     subscription: null,
-    //     accounts: hasAdminCap ? 0 : null,
-    //   });
-    //   console.log(newUser);
-    //   res.send(newUser);
-    // } catch (error) {
-    //   throw error;
-    // }
-    res.send(testUser);
+    const { familyName, givenName, email, role, isAdmin } = req.body;
+    const user = new User({
+      familyName,
+      givenName,
+      email,
+      role,
+      isAdmin,
+    });
+    const UserDoc = await user.save();
+    res.send(UserDoc);
   },
 
   async getById(req, res) {
