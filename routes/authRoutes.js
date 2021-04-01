@@ -36,12 +36,13 @@ module.exports = (app) => {
   });
 
   app.post("/api/users", usersController.createUser);
+  app.get("/api/users", usersController.getMatchedUsers);
+  app.get("/api/users/:userId", usersController.getById);
+  app.put("/api/users/:userId", usersController.updateOneUser);
+  app.delete("/api/users/:userId", usersController.deleteUserById);
 
   app.get(
     "/auth/google/applicant",
-    (req, res, next) => {
-      next();
-    },
     passport.authenticate("google", {
       scope: ["profile", "email"],
       state: ROLES.Applicant,

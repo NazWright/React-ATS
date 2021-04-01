@@ -15,15 +15,3 @@ before((done) => {
       console.warn("Warning", error);
     });
 });
-
-// run this before starting tests.
-beforeEach((done) => {
-  mongoose.connection.collections.users
-    .drop()
-    .then(() => {
-      done();
-    })
-    .catch(() => {
-      done();
-    });
-});

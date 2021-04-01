@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
-const User = mongoose.model("users");
+const User = require("../models/User");
 
 module.exports = {
   // isAdmin(role) {
@@ -16,13 +16,32 @@ module.exports = {
   // },
 
   async createUser(req, res) {
-    const { familyName, givenName, email, role, isAdmin } = req.body;
-    const user = new User({
+    const {
+      googleId,
       familyName,
       givenName,
       email,
+      password,
       role,
       isAdmin,
+      parent,
+      cust_Id,
+      subscription,
+      accounts,
+    } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new User({
+      googleId,
+      familyName,
+      givenName,
+      email,
+      password: hashedPassword,
+      role,
+      isAdmin,
+      parent,
+      cust_Id,
+      subscription,
+      accounts,
     });
     const UserDoc = await user.save();
     res.send(UserDoc);
@@ -30,7 +49,7 @@ module.exports = {
 
   async getById(req, res) {
     const { userId } = req.params;
-    const matchedUser = User.findById(userId);
+    const matchedUser = await User.findById(userId);
     res.send(matchedUser);
   },
 
