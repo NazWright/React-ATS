@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const pointSchema = new Schema({
-  type: {
-    type: String,
-    default: "Point",
-  },
-  coordinates: { type: [Number], index: "2dsphere" },
-});
+// const pointSchema = new Schema({
+//   type: {
+//     type: String,
+//     default: "Point",
+//   },
+//   coordinates: { type: [Number], index: "2dsphere" },
+// });
 
 const userSchema = new Schema({
   googleId: {
@@ -54,7 +54,6 @@ const userSchema = new Schema({
     type: Number,
     required: false,
   },
-  geometry: pointSchema,
 });
 
 const User = mongoose.model("users", userSchema);
