@@ -1,8 +1,0 @@
-<h1>
-            Apply to{" "}
-            {listings
-              .filter((listing) => listing._id === match.params.id)
-              .map((listing) => {
-                return listing.title;
-              })}
-          </h1>
